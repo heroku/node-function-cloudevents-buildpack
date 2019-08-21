@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -eo pipefail
+
+# Set the layersdir variable to be the first argument from the build lifecycle
+layersdir=$1
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+layerdir=$layersdir/node-function-cloudevents
+mkdir -p $layerdir
+echo -e 'launch = true' > $layersdir/node-function-cloudevents.toml
+cp $DIR/../cloudevents.js $layerdir
+cp $DIR/../package.json $layerdir
+cp $DIR/../package-lock.json $layerdir
+
+pushd $layerdir
+npm install
+popd
+
+mkdir -p $layerdir/env.launch
+echo -n "$layerdir/cloudevents.js" > $layerdir/env.launch/MIDDLEWARE_FUNCTION_URI
+
+exit 0

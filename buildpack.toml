@@ -1,0 +1,9 @@
+# Buildpack ID and metadata
+[buildpack]
+id = "heroku/node-function-cloudevents"
+version = "0.0.1"
+name = "Node Function Cloudevents"
+
+# Stacks that the buildpack will work with
+[[stacks]]
+id = "heroku-18"
